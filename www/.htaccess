@@ -1,0 +1,83 @@
+#php_flag display_errors on
+#php_flag html_errors on
+
+Options +FollowSymlinks
+RewriteEngine on
+RewriteBase /
+
+#RewriteCond %{HTTP_HOST} !^www\. [NC]
+#RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [L,R=301]
+
+RewriteCond %{REQUEST_FILENAME} -f [NC,OR]
+RewriteCond %{REQUEST_FILENAME} -d [NC]
+
+RewriteRule .* - [L]
+
+# point sitemap.xml to php skript // rss=1 for the header to output xml
+RewriteRule sitemapindex.xml sitemapindex.php?rss=1 [NC,L]
+RewriteRule sitemap.xml sitemap.php?rss=1 [NC,L]
+RewriteRule ([^/]+)/sitemap.xml sitemap.php?rss=1&l=$1 [NC,L]
+
+# check if showing the rss feed
+RewriteRule ^rss/([^/]+)/([^/]+)/([^/]+)/([^/]+)/([^/]+) /rss/?l=$1&s=$2&p=$3&pp=$4&ppp=$5 [NC,L]
+RewriteRule ^rss/([^/]+)/([^/]+)/([^/]+)/([^/]+) /rss/?l=$1&s=$2&pp=$3&pp=$4 [NC,L]
+RewriteRule ^rss/([^/]+)/([^/]+)/([^/]+) /rss/?l=$1&s=$2&p=$3 [NC,L]
+RewriteRule ^rss/([^/]+)/([^/]+) /rss/?l=$1&s=$2 [NC,L]
+RewriteRule ^rss/([^/]+) /rss/?l=$1 [NC,L]
+
+# normal pages
+
+RewriteRule ^([^/]+)/([^/]+)/([^/]+)/([^/]+)/([^/]+) ?l=$1&s=$2&p=$3&pp=$4&ppp=$5 [NC,L]
+RewriteRule ^([^/]+)/([^/]+)/([^/]+)/([^/]+) ?l=$1&s=$2&p=$3&pp=$4 [NC,L]
+RewriteRule ^([^/]+)/([^/]+)/([^/]+) ?l=$1&s=$2&p=$3 [NC,L]
+RewriteRule ^([^/]+)/([^/]+) ?l=$1&s=$2 [NC,L]
+RewriteRule ^([^/]+) ?l=$1 [NC,L]
+
+# videos
+AddType video/ogg .ogv
+AddType video/mp4 .mp4
+AddType video/webm .webm
+
+# compress content
+<IfModule mod_deflate.c>
+	AddOutputFilterByType DEFLATE text/plain
+	AddOutputFilterByType DEFLATE text/html
+	AddOutputFilterByType DEFLATE text/xml
+	AddOutputFilterByType DEFLATE text/css
+	AddOutputFilterByType DEFLATE text/javascript
+	AddOutputFilterByType DEFLATE application/xml
+	AddOutputFilterByType DEFLATE application/xhtml+xml
+	AddOutputFilterByType DEFLATE application/rss+xml
+	AddOutputFilterByType DEFLATE application/javascript
+	AddOutputFilterByType DEFLATE application/x-javascript
+</IfModule>
+
+# set expire date
+<IfModule mod_expires.c>
+  	ExpiresActive On
+  	ExpiresDefault "access plus 15 days"
+  	ExpiresByType text/html "access plus 15 days"
+  	ExpiresByType image/gif "access plus 1 month 1 days"
+  	ExpiresByType image/jpeg "access plus 1 month 1 days"
+	ExpiresByType image/jpg "access plus 1 month 1 days"
+  	ExpiresByType image/png "access plus 1 month 1 days"
+  	ExpiresByType text/css "access plus 1 month 1 days"
+  	ExpiresByType text/javascript "access plus 1 month 1 week"
+  	ExpiresByType application/x-javascript "access plus 1 month 1 days"
+  	ExpiresByType text/xml "access plus 1 seconds"
+</IfModule>
+
+#personal error pages
+#ErrorDocument 401 /err/401.php 
+#ErrorDocument 403 /err/403.php 
+#ErrorDocument 404 /err/404.php 
+#ErrorDocument 500 /err/500.php
+
+#set default charset to utf-8
+<ifModule mod_php4.c>  
+	php_value default_charset utf-8 
+</ifModule>
+
+<ifModule mod_php5.c>
+	php_value default_charset utf-8 
+</ifModule>

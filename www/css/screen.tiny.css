@@ -1,0 +1,12 @@
+h1{font-size:14px;}
+h2{font-size:14px;}
+h3{font-size:14px;}
+img{margin:5px;}
+.center{display:block;width:auto;text-align:center;}
+.right-float{float:right;}
+.left-float{float:left;}
+.break{clear:both;}
+a{color:#CC9900;}
+.yellow{color:#CC9900;}
+.table_left{float:left;max-width:330px;}
+.table_right{float:right;max-width:350px;}
