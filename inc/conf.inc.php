@@ -8,7 +8,7 @@ else
 	define("DOMAIN", "domain.com");
 
 /* PREFERENCES */
-define("SUBFOLDER", "adm"); // is the ADM Folder in subdomain or in main domain. Leave empty if subdomain
+define("SUBFOLDER", ""); // is the ADM Folder in subdomain or in main domain. Leave empty if subdomain
 //
 define("CLIENT_DOMAIN", ""); // for client data, set if you have a subdomain
 define("DEFCHAR", "utf8"); // default charset
